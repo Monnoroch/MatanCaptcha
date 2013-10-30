@@ -3,12 +3,17 @@
 from tasks import *
 
 
+taskBuilder = CaptchaTaskBuilder()
+
+
 def main():
-    # 7   -- power of poly
-    # -30 -- min coeff
-    # 30  -- max coeff
-    task = LimitPolynomTask("x", 7, -2, 2)
-    print task.formula(), " -> ", task.solve()
+    taskData = taskBuilder.getTask("matan", 0)
+    task = taskData["task"]
+    uid = taskData["id"]
+    # TODO: get solution from user
+    solution = task.getSolution()
+    res = taskBuilder.verify(uid, solution)
+    print task, "->", str(solution) + "; (" + str(res) + ")"
 
 
 if __name__ == "__main__":

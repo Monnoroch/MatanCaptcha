@@ -2,6 +2,7 @@
 
 from Formula import Formula
 
+
 class RawExpression(Formula):
     """Raw text expression"""
     def __init__(self, expr):

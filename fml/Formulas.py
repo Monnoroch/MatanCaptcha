@@ -2,6 +2,7 @@
 
 from Formula import Formula
 
+
 class Rational(Formula):
     """Rational expression"""
     def __init__(self, f1, f2):

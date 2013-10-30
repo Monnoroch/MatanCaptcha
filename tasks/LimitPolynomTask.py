@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import random
+
 from fml import *
-from Task import DefaultTask
+from MatanCaptchaTask import MatanFormulaCaptchaTask
+
 
 def NOD(a, b):
     a = abs(a)
@@ -15,7 +17,7 @@ def NOD(a, b):
     return a + b
 
 
-class LimitPolynomTask(DefaultTask):
+class LimitPolynomTask(MatanFormulaCaptchaTask):
     random.seed()
 
     def __init__(self, variable, coeffs1, cmin1 = None, cmax1 = None, coeffs2 = None, cmin2 = None, cmax2 = None):
@@ -51,7 +53,7 @@ class LimitPolynomTask(DefaultTask):
             )
         )
 
-    def solve(self):
+    def getSolution(self):
         if self.coeffs1[0] % self.coeffs2[0] == 0:
             self.solution = self.coeffs1[0] / self.coeffs2[0]
         else:
@@ -67,3 +69,5 @@ class LimitPolynomTask(DefaultTask):
             res.append(random.randint(min, max))
         return res
 
+    def verify(self, solution):
+        return solution == self.getSolution()
