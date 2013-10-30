@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 class Task:
     def solve(self):
         raise Exception("Abstract method \"Task.solve\"")

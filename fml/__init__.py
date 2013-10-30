@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from Formula import Formula
 from BasicFormulas import RawExpression
 from BasicFormulas import Variable

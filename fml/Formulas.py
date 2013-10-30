@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from Formula import Formula
 
 class Rational(Formula):

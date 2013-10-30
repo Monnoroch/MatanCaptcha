@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import random
 from fml import *
 from Task import DefaultTask
