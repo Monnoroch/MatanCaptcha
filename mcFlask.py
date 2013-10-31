@@ -10,7 +10,8 @@ app = Flask(__name__)
 
 @app.route("/get")
 def indexGet():
-    return jsonify(taskBuilder.getTask("matan", 0))
+    task = taskBuilder.getTask("gn", 0)
+    return jsonify({"task": str(task["task"]), "id": task["id"]})
 
 @app.route("/verify")
 def indexVerify():
