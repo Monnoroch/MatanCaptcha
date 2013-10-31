@@ -7,5 +7,6 @@ from MatanCaptchaTask import MatanFormulaCaptchaTask
 from LimitPolynomTask import LimitPolynomTask
 
 from GnCaptchaTask import GnCaptchaTask
+from GnDictTask import GnDictTask
 
 from CaptchaTaskBuilder import CaptchaTaskBuilder

@@ -2,19 +2,6 @@
 
 import uuid, random
 
-from LimitPolynomTask import LimitPolynomTask
-from GnDictTask import GnDictTask
-
-
-class LimitPolynomTask1(LimitPolynomTask):
-    def __init__(self):
-        LimitPolynomTask.__init__(self, "x", 7, -3, 3)
-
-
-class GnDictTask1(GnDictTask):
-    def __init__(self):
-        GnDictTask.__init__(self, ["привет", "пока"])
-
 
 def weightedChoice(weights):
     rnd = random.random() * sum(weights)
@@ -28,8 +15,8 @@ class CaptchaTaskBuilder:
 
 	# {type: list of (task class, weight for random picking)}
 	tasksTable = {
-		"matan": [("LimitPolynomTask1", 2)],
-		"gn":    [("GnDictTask1", 1)]
+		"matan": [],
+		"gn":    []
 	}
 
 	# тут хранятся активные таски: те, на которые не запрашивали проверку
@@ -39,12 +26,7 @@ class CaptchaTaskBuilder:
 	log = {}
 
 	def __init__(self):
-		self.tasksTableWeights = {}
-		for x in self.tasksTable.keys():
-			val = []
-			for (n, w) in self.tasksTable[x]:
-				val.append(w)
-			self.tasksTableWeights[x] = val
+		self._recalcWeights()
 
 	def getTask(self, mode, diff):
 		task = self._getTask(mode, diff)
@@ -66,6 +48,17 @@ class CaptchaTaskBuilder:
 		return res
 
 	def _getTask(self, mode, diff):
-		tasks = self.tasksTable[mode]
-		(n, w) = tasks[weightedChoice(self.tasksTableWeights[mode])]
-		return globals()[n]()
+		(n, w) = self.tasksTable[mode][weightedChoice(self.tasksTableWeights[mode])]
+		return n()
+
+	def addTaskClass(self, mode, cls, weight):
+		self.tasksTable[mode].append((cls, weight))
+		self._recalcWeights()
+
+	def _recalcWeights(self):
+		self.tasksTableWeights = {}
+		for x in self.tasksTable.keys():
+			val = []
+			for (n, w) in self.tasksTable[x]:
+				val.append(w)
+			self.tasksTableWeights[x] = val
