@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, jsonify
+import os
+
+from mathtex.mathtex_main import Mathtex
+from mathtex.fonts import UnicodeFonts
+
+from flask import Flask, jsonify, request, url_for
 from tasks import *
 
 
@@ -23,14 +28,17 @@ app = Flask(__name__)
 
 @app.route("/get")
 def indexGet():
-    task = taskBuilder.getTask("gn", 0)
-    return jsonify({"task": str(task["task"]), "id": task["id"]})
+    ttype = request.args.get("type")
+    task = taskBuilder.getTask(ttype, 0)
+    fname = task["id"] + '.png'
+    Mathtex(r"$" + str(task["task"]) + r"$").save("static/" + fname, 'png')
+    return "<img src=\"" + url_for('static', filename=fname) + "\"/>" + "<br><div>id = \"" + task["id"] + "\"</div><div>tex = \"" + str(task["task"]) + "\"</div>"
+#    return jsonify({"task": str(task["task"]), "id": task["id"]})
 
 @app.route("/verify")
 def indexVerify():
-    # TODO: get those
-    uid = ""
-    solution = ""
+    uid = request.args.get("id")
+    solution = request.args.get("solution", "string")
     return jsonify({"res": taskBuilder.verify(uid, solution)})
 
 app.run()

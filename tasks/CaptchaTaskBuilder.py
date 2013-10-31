@@ -30,7 +30,7 @@ class CaptchaTaskBuilder:
 
 	def getTask(self, mode, diff):
 		task = self._getTask(mode, diff)
-		uid = uuid.uuid4()
+		uid = str(uuid.uuid4())
 		self.tasks[uid] = {"diff": diff, "mode": mode, "task": task}
 		self.log[uid] = {"diff": diff, "mode": mode, "className": task.__class__.__name__, "task": str(task)}
 		return {"task": task, "id": uid}
@@ -39,7 +39,9 @@ class CaptchaTaskBuilder:
 		return self.tasks[uid]["task"].getSolution()
 
 	def verify(self, uid, solution):
-		res = self.tasks[uid]["task"].verify(solution)
+		obj = self.tasks[uid]
+		task = obj["task"]
+		res = task.verify(solution)
 		logobj = self.log[uid]
 		logobj["result"] = res
 		if not res:

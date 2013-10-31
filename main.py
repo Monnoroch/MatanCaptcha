@@ -19,7 +19,7 @@ taskBuilder.addTaskClass("gn", GnDictTask1, 2)
 
 
 def main():
-    taskData = taskBuilder.getTask("gn", 0)
+    taskData = taskBuilder.getTask("matan", 0)
     task = taskData["task"]
     uid = taskData["id"]
     # TODO: get solution from user

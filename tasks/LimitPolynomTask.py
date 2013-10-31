@@ -55,7 +55,7 @@ class LimitPolynomTask(MatanFormulaCaptchaTask):
 
     def getSolution(self):
         if self.coeffs1[0] % self.coeffs2[0] == 0:
-            self.solution = self.coeffs1[0] / self.coeffs2[0]
+            self.solution = str(self.coeffs1[0] / self.coeffs2[0])
         else:
             nod = NOD(self.coeffs1[0], self.coeffs2[0])
             num = self.coeffs1[0]/nod
