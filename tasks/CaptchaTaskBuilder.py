@@ -1,13 +1,26 @@
 # -*- coding: utf-8 -*-
 
-import uuid
+import uuid, random
 
 from LimitPolynomTask import LimitPolynomTask
 from GnDictTask import GnDictTask
 
 
+class LimitPolynomTask1(LimitPolynomTask):
+    def __init__(self):
+        LimitPolynomTask.__init__(self, "x", 7, -3, 3)
+
+
+class GnDictTask1(GnDictTask):
+    def __init__(self):
+        GnDictTask.__init__(self, ["привет", "пока"])
+
+
 class CaptchaTaskBuilder:
-	types = {"matan": "_getMatanTask", "gn": "_getGnTask"}
+	tasksTable = {
+		"matan": ["LimitPolynomTask1"],
+		"gn":    ["GnDictTask1"]
+	}
 
 	# тут хранятся активные таски: те, на которые не запрашивали проверку
 	# проверенные таски удаляются
@@ -19,7 +32,7 @@ class CaptchaTaskBuilder:
 		pass
 
 	def getTask(self, mode, diff):
-		task = getattr(self, self.types[mode])(diff)
+		task = self._getTask(mode, diff)
 		uid = uuid.uuid4()
 		self.tasks[uid] = {"diff": diff, "mode": mode, "task": task}
 		self.log[uid] = {"diff": diff, "mode": mode, "className": task.__class__.__name__, "task": str(task)}
@@ -37,8 +50,6 @@ class CaptchaTaskBuilder:
 		del self.tasks[uid]
 		return res
 
-	def _getMatanTask(self, diff):
-		return LimitPolynomTask("x", 7, -3, 3)
-
-	def _getGnTask(self, diff):
-		return GnDictTask(["привет", "пока"])
+	def _getTask(self, mode, diff):
+		tasks = self.tasksTable[mode]
+		return globals()[tasks[random.randint(0, len(tasks) - 1)]]()

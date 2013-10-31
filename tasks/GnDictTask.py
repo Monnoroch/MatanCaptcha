@@ -13,7 +13,6 @@ class GnDictTask(GnCaptchaTask):
 		self.maxWildcards = 3
 
 		res = self.dict[random.randint(0, len(self.dict) - 1)]
-		print res
 		self.solution = res
 		cnt = random.randint(1, self.maxWildcards)
 		wcs = []
