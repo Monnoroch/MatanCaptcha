@@ -10,7 +10,8 @@ class LimitPolynomTask1(LimitPolynomTask):
 
 class GnDictTask1(GnDictTask):
     def __init__(self):
-        GnDictTask.__init__(self, ["привет", "пока"])
+        gnWords = [line.strip() for line in open('data/russian_words_dictionary.txt')]
+        GnDictTask.__init__(self, gnWords)
 
 
 taskBuilder = CaptchaTaskBuilder()
@@ -19,6 +20,7 @@ taskBuilder.addTaskClass("gn", GnDictTask1, 2)
 
 
 def main():
+    # Matan capcha test
     taskData = taskBuilder.getTask("matan", 0)
     task = taskData["task"]
     uid = taskData["id"]
@@ -27,6 +29,13 @@ def main():
     res = taskBuilder.verify(uid, solution)
     print str(task), "->", str(solution) + "; (" + str(res) + ")"
 
+    # Gn capcha test
+    taskData = taskBuilder.getTask("gn", 0)
+    task = taskData["task"]
+    uid = taskData["id"]
+    solution = task.getSolution()
+    res = taskBuilder.verify(uid, solution)    
+    print str(task), "->", str(solution) + "; (" + str(res) + ")"
 
 if __name__ == "__main__":
     main()

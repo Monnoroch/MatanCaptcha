@@ -17,7 +17,7 @@ class GnDictTask(GnCaptchaTask):
 		cnt = random.randint(1, self.maxWildcards)
 		wcs = []
 		for i in xrange(0, cnt):
-			wcs.append(random.randint(0, len(res)))
+			wcs.append(random.randint(0, len(res) - 1))
 		for i in xrange(0, cnt):
 			res = res[:wcs[i]] + "*" + res[wcs[i] + 1:]
 		self.task = res
@@ -32,4 +32,6 @@ class GnDictTask(GnCaptchaTask):
 		return self.solution == sol
 
 	def __str__(self):
-		return str([self.task, self.solution])
+		# return str([self.task, self.solution])
+		# workaround for unicode strings in python 2
+		return '[' + ','.join("'" + str(x) + "'" for x in [self.task, self.solution]) + ']'
