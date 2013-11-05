@@ -2,6 +2,8 @@
 
 import os
 
+from mathtex.mathtex_main import Mathtex
+
 from flask import Flask, jsonify, request, url_for
 from tasks import *
 
@@ -12,8 +14,10 @@ class LimitPolynomTask1(LimitPolynomTask):
 
 
 class GnDictTask1(GnDictTask):
+    gnWords = [line.strip() for line in open('data/russian_words_dictionary.txt')]
+
     def __init__(self):
-        GnDictTask.__init__(self, ["привет", "пока"])
+        GnDictTask.__init__(self, self.gnWords, 2)
 
 
 taskBuilder = CaptchaTaskBuilder()

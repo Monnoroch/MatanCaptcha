@@ -8,9 +8,9 @@ from GnCaptchaTask import GnCaptchaTask
 class GnDictTask(GnCaptchaTask):
 	random.seed()
 
-	def __init__(self, dic):
+	def __init__(self, dic, maxWc):
 		self.dict = dic[:]
-		self.maxWildcards = 3
+		self.maxWildcards = maxWc
 
 		res = self.dict[random.randint(0, len(self.dict) - 1)]
 		self.solution = res
@@ -32,6 +32,5 @@ class GnDictTask(GnCaptchaTask):
 		return self.solution == sol
 
 	def __str__(self):
-		# return str([self.task, self.solution])
 		# workaround for unicode strings in python 2
-		return '[' + ','.join("'" + str(x) + "'" for x in [self.task, self.solution]) + ']'
+		return '[' + str(self.task) + ', ' + str(self.solution) + ']'
