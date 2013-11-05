@@ -9,7 +9,7 @@ from tasks.gn_captcha_task import GnCaptchaTask
 class GnDictTask(GnCaptchaTask):
     """GN task with checking orphografy"""
 
-    def __init__(self, dic, max_wc):
+    def __init__(self, dic, max_wc=1):
         self.dict = dic[:]
         self.max_wildcards = max_wc
 
@@ -31,4 +31,4 @@ class GnDictTask(GnCaptchaTask):
 
     def __str__(self):
         # workaround for unicode strings in python 2
-        return '[' + str(self.task) + ', ' + str(self._solution) + ']'
+        return "[" + str(self.task) + ", " + str(self._solution) + "]"

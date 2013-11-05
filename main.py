@@ -11,8 +11,8 @@ class LimitPolynomTask1(LimitPolynomTask):
 
 class GnDictTask1(GnDictTask):
     """Custom implementation of GnDictTask"""
-    gn_words = [line.strip() for line in
-        open('data/russian_words_dictionary.txt')]
+    with open("data/russian_words_dictionary.txt") as dict_file:
+        gn_words = [line.strip() for line in  dict_file]
 
     def __init__(self):
         GnDictTask.__init__(self, self.gn_words, 2)

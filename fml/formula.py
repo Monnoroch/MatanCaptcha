@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module with base Formula class"""
 
-class Formula:
+class Formula(object):
     """Abstract formula expression"""
 
     def texify(self):

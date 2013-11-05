@@ -11,7 +11,7 @@ class Rational(Formula):
         self.den = den
 
     def texify(self):
-        return "\\frac{" + self.num.texify() + "}{" + self.den.texify() + "}"
+        return "\\frac{%s}{%s}" % (self.num.texify(), self.den.texify())
 
 
 class Limit(Formula):
@@ -25,7 +25,7 @@ class Limit(Formula):
         vart = self.variable.texify()
         limt = self.limit.texify()
         fmlt = self.fml.texify()
-        return "\\lim_{" + vart + " \\to " + limt + "} "+ fmlt
+        return "\\lim_{%s\\to%s} %s" % (vart, limt, fmlt)
 
 
 class PolynomNum(Formula):

@@ -22,8 +22,8 @@ def nod(num1, num2):
 class LimitPolynomTask(MatanFormulaCaptchaTask):
     """Matan task with formula lim_{x->inf} P1(x)/P2(x)"""
 
-    def __init__(self, variable, coeffs1, cmin1 = None, cmax1 = None,
-        coeffs2 = None, cmin2 = None, cmax2 = None):
+    def __init__(self, variable, coeffs1, cmin1=None, cmax1=None,
+        coeffs2=None, cmin2=None, cmax2=None):
         self.variable = Variable(variable)
         if coeffs2 is None:
             coeffs2 = coeffs1

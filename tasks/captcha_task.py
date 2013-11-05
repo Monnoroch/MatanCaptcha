@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module with base CaptchaTask class and some basic task classes"""
 
-class CaptchaTask:
+class CaptchaTask(object):
     """Base class for all captcha tasks"""
 
     def get(self):
