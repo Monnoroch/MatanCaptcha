@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
+"""Module with formulas"""
 
-from Formula import Formula
+from fml.formula import Formula
 
 
 class Rational(Formula):
     """Rational expression"""
-    def __init__(self, f1, f2):
-        self.f1 = f1
-        self.f2 = f2
+    def __init__(self, num, den):
+        self.num = num
+        self.den = den
 
     def texify(self):
-        return "\\frac{" + self.f1.texify() + "}{" + self.f2.texify() + "}"
+        return "\\frac{" + self.num.texify() + "}{" + self.den.texify() + "}"
+
 
 class Limit(Formula):
     """Limit expression"""
@@ -20,7 +22,11 @@ class Limit(Formula):
         self.fml = fml
 
     def texify(self):
-        return "\\lim_{" + self.variable.texify() + " \\to " + self.limit.texify() + "} " + self.fml.texify()
+        vart = self.variable.texify()
+        limt = self.limit.texify()
+        fmlt = self.fml.texify()
+        return "\\lim_{" + vart + " \\to " + limt + "} "+ fmlt
+
 
 class PolynomNum(Formula):
     """Polynom with number coefficients expression"""
@@ -34,30 +40,30 @@ class PolynomNum(Formula):
 
     def texify(self):
         res = ""
-        for p in xrange(0, self.cnt):
-            cf = self.coeffs[p]
+        for pos in xrange(0, self.cnt):
+            coeff = self.coeffs[pos]
 
-            if cf == 0:
+            if coeff == 0:
                 continue
-            # [-][cf ][x][^{}]
+            # [-][coeff ][x][^{}]
 
-            if p == self.cnt - 1:
-                if cf < 0:
+            if pos == self.cnt - 1:
+                if coeff < 0:
                     res += " - "
                 else:
                     res += " + "
-                res += str(abs(cf))
+                res += str(abs(coeff))
             else:
-                if cf < 0:
-                    if p == 0:
+                if coeff < 0:
+                    if pos == 0:
                         res += "-"
                     else:
                         res += " - "
-                elif p != 0:
+                elif pos != 0:
                     res += " + "
-                if abs(cf) != 1:
-                    res += str(abs(cf))
+                if abs(coeff) != 1:
+                    res += str(abs(coeff))
                 res += self.variable.texify()
-                if self.cnt - p - 1 > 1:
-                    res += "^{" + str(self.cnt - p - 1) + "}"
+                if self.cnt - pos - 1 > 1:
+                    res += "^{" + str(self.cnt - pos - 1) + "}"
         return res

@@ -3,7 +3,7 @@
 import uuid, random
 
 
-def weightedChoice(weights):
+def weighted_choice(weights):
     rnd = random.random() * sum(weights)
     for i, w in enumerate(weights):
         rnd -= w
@@ -14,7 +14,7 @@ def weightedChoice(weights):
 class CaptchaTaskBuilder:
 
 	# {type: list of (task class, weight for random picking)}
-	tasksTable = {
+	tasks_table = {
 		"matan": [],
 		"gn":    []
 	}
@@ -26,17 +26,17 @@ class CaptchaTaskBuilder:
 	log = {}
 
 	def __init__(self):
-		self._recalcWeights()
+		self._recalc_weights()
 
-	def getTask(self, mode, diff):
-		task = self._getTask(mode, diff)
+	def get(self, mode, diff):
+		task = self._get(mode, diff)
 		uid = str(uuid.uuid4())
 		self.tasks[uid] = {"diff": diff, "mode": mode, "task": task}
 		self.log[uid] = {"diff": diff, "mode": mode, "className": task.__class__.__name__, "task": str(task)}
 		return {"task": task, "id": uid}
 
-	def getSolution(self, uid):
-		return self.tasks[uid]["task"].getSolution()
+	def solution(self, uid):
+		return self.tasks[uid]["task"].solution()
 
 	def verify(self, uid, solution):
 		obj = self.tasks[uid]
@@ -46,21 +46,24 @@ class CaptchaTaskBuilder:
 		logobj["result"] = res
 		if not res:
 			logobj["solution"] = solution
-		del self.tasks[uid]
+		self.drop(uid)
 		return res
 
-	def _getTask(self, mode, diff):
-		(n, w) = self.tasksTable[mode][weightedChoice(self.tasksTableWeights[mode])]
+	def _get(self, mode, diff):
+		(n, w) = self.tasks_table[mode][weighted_choice(self.tasks_table_weights[mode])]
 		return n()
 
-	def addTaskClass(self, mode, cls, weight):
-		self.tasksTable[mode].append((cls, weight))
-		self._recalcWeights()
+	def add_task_class(self, mode, cls, weight):
+		self.tasks_table[mode].append((cls, weight))
+		self._recalc_weights()
 
-	def _recalcWeights(self):
-		self.tasksTableWeights = {}
-		for x in self.tasksTable.keys():
+	def _recalc_weights(self):
+		self.tasks_table_weights = {}
+		for x in self.tasks_table.keys():
 			val = []
-			for (n, w) in self.tasksTable[x]:
+			for (n, w) in self.tasks_table[x]:
 				val.append(w)
-			self.tasksTableWeights[x] = val
+			self.tasks_table_weights[x] = val
+
+	def drop(self, uid):
+		del self.tasks[uid]

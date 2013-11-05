@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from Formula import Formula
-from BasicFormulas import RawExpression
-from BasicFormulas import Variable
-from BasicFormulas import Infinity
-from Formulas import Rational
-from Formulas import Limit
-from Formulas import PolynomNum
+from fml.formula import Formula
+from fml.basic_formulas import RawExpression
+from fml.basic_formulas import Variable
+from fml.basic_formulas import Infinity
+from fml.formulas import Rational
+from fml.formulas import Limit
+from fml.formulas import PolynomNum

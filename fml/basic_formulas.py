@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
+"""Module with basic formulas"""
 
-from Formula import Formula
+from fml.formula import Formula
 
 
 class RawExpression(Formula):
@@ -15,8 +16,13 @@ class RawExpression(Formula):
 class Variable(RawExpression):
     """Variable expression"""
     def __init__(self, name):
-        self.expr = name
+        RawExpression.__init__(self, name)
+
 
 class Infinity(Formula):
+    """Infinity expression"""
+    def __init__(self):
+        pass
+
     def texify(self):
         return "\\infty"
