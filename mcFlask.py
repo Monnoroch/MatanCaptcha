@@ -38,6 +38,7 @@ def indexGet():
 def indexVerify():
     uid = request.args.get("id")
     solution = request.args.get("solution", "string")
+    os.remove("static/" + uid + '.png')
     return jsonify({"res": taskBuilder.verify(uid, solution)})
 
 app.run()
