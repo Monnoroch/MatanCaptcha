@@ -67,3 +67,35 @@ class PolynomNum(Formula):
                 if self.cnt - pos - 1 > 1:
                     res += "^{" + str(self.cnt - pos - 1) + "}"
         return res
+
+
+class MatrixNum(Formula):
+    """Matrix with numeric coefficients"""
+    def __init__(self, rows):
+        self.rows = rows[:]
+        self.n = len(rows)
+        self.k = len(rows[0])
+        for row in rows:
+            assert(len(row) == self.k)
+
+    def texify(self):
+        data = ""
+        for ind1 in xrange(self.n):
+            row = self.rows[ind1]
+            for ind2 in xrange(self.k):
+                num = row[ind2]
+                data += str(num)
+                if ind2 != self.k - 1:
+                    data += " & "
+            if ind1 != self.n - 1:
+                data += " \\\\ "
+        return "\\left(\\begin{matrix} %s \\end{matrix}\\right)" % data
+
+class Determinant(Formula):
+    """Det of a matrix"""
+
+    def __init__(self, matr):
+        self.matr = matr
+
+    def texify(self):
+        return "det \\left| " + self.matr.texify()[6:-7] + " \\right|"

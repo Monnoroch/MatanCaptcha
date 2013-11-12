@@ -74,3 +74,42 @@ class LimitPolynomTask(MatanFormulaCaptchaTask):
         for _ in xrange(0, cnt):
             res.append(random.randint(vmin, vmax))
         return res
+
+
+class MatrixDiagDetTask(MatanFormulaCaptchaTask):
+    """Matan task of finding det(diagonal matrix)"""
+
+    def __init__(self, size):
+        self.size = size
+        mat = []
+        for i in xrange(size):
+            mat.append([])
+            for j in xrange(size):
+                mat[i].append(0)
+
+        for i in xrange(size):
+            mat[i][i] = random.randint(0, 3)
+        self._formula = Determinant(MatrixNum(mat))
+        self.mat = mat
+
+    def solution(self):
+        res = 1
+        for i in xrange(self.size):
+            res *= self.mat[i][i]
+        return res
+
+    def verify(self, solution):
+        try:
+            return self.solution() == int(solution)
+        except:
+            return False
+
+
+class MatrixKindaDiagDetTask(MatrixDiagDetTask):
+    """Matan task of finding det(non-diagonal matrix, but det can be calculated just like for diagonal)"""
+
+    def __init__(self, size):
+        MatrixDiagDetTask.__init__(self, size)
+        for i in xrange(size):
+            mat[i][self.size - 1 - i] = random.randint(0, 6)
+        mat[i][0] = 0

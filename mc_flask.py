@@ -2,8 +2,7 @@
 """Simple flask server for captcha generation"""
 
 import os
-
-from mathtex.mathtex_main import Mathtex
+import urllib
 
 from flask import Flask
 from flask import jsonify
@@ -28,6 +27,19 @@ class GnDictTask1(GnDictTask):
         GnDictTask.__init__(self, self.gn_words, 2)
 
 
+class MatrixDiagDetTask1(MatrixDiagDetTask):
+    """Custom implementation of MatrixDiagDetTask"""
+
+    def __init__(self):
+        MatrixDiagDetTask.__init__(self, 4)
+
+class MatrixKindaDiagDetTask1(MatrixKindaDiagDetTask):
+    """Custom implementation of MatrixKindaDiagDetTask"""
+
+    def __init__(self):
+        MatrixKindaDiagDetTask.__init__(self, 4)
+
+
 
 task_builder = CaptchaTaskBuilder()
 
@@ -41,9 +53,8 @@ def index_get():
     task = task_builder.get(ttype, 0)
     fname = task["id"] + ".png"
     if ttype == "matan":
-        Mathtex(r"$" + str(task["task"]) + r"$").save("static/" + fname, "png")
-        url = url_for("static", filename=fname)
         stask = str(task["task"])
+        url = "https://chart.googleapis.com/chart?" + urllib.urlencode({"cht": "tx", "chl": stask})
         sid = task["id"]
         img = "<img src=\"" + url + "\"/>"
         did = "<div>id = \"" + sid + "\"</div>"
@@ -57,14 +68,12 @@ def index_verify():
     """/verify?id=id&solution=solution"""
     uid = request.args.get("id")
     solution = request.args.get("solution", "string")
-    os.remove("static/" + uid + ".png")
     return jsonify({"res": task_builder.verify(uid, solution)})
 
 @app.route("/drop")
 def index_drop():
     """/drop?id=id"""
     uid = request.args.get("id")
-    os.remove("static/" + uid + ".png")
     task_builder.drop(uid)
     return ""
 
@@ -72,8 +81,9 @@ def index_drop():
 def main():
     """main"""
     task_builder.add_task_class("matan", LimitPolynomTask1, 1)
+    task_builder.add_task_class("matan", MatrixKindaDiagDetTask1, 1)
     task_builder.add_task_class("gn", GnDictTask1, 2)
-    app.run()
+    app.run(debug=True)
 
 
 if __name__ == "__main__":

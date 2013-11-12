@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """main"""
+
 from tasks import *
+from fml import *
 
 
 class LimitPolynomTask1(LimitPolynomTask):
@@ -16,6 +18,18 @@ class GnDictTask1(GnDictTask):
 
     def __init__(self):
         GnDictTask.__init__(self, self.gn_words, 2)
+
+class MatrixDiagDetTask1(MatrixDiagDetTask):
+    """Custom implementation of MatrixDiagDetTask"""
+
+    def __init__(self):
+        MatrixDiagDetTask.__init__(self, 4)
+
+class MatrixKindaDiagDetTask1(MatrixKindaDiagDetTask):
+    """Custom implementation of MatrixKindaDiagDetTask"""
+
+    def __init__(self):
+        MatrixKindaDiagDetTask.__init__(self, 4)
 
 
 task_builder = CaptchaTaskBuilder()
@@ -34,6 +48,7 @@ def test(task_data):
 def main():
     """main"""
     task_builder.add_task_class("matan", LimitPolynomTask1, 1)
+    task_builder.add_task_class("matan", MatrixKindaDiagDetTask1, 1)
     task_builder.add_task_class("gn", GnDictTask1, 2)
     # Matan capcha test
     test(task_builder.get("matan", 0))

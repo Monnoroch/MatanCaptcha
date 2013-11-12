@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """Module with base MatanCaptchaTask class and some basic task classes"""
 
-from tasks.captcha_task import CaptchaTask
+from tasks.captcha_task import DefaultCaptchaTask
 
 
-class MatanCaptchaTask(CaptchaTask):
+class MatanCaptchaTask(DefaultCaptchaTask):
     """Base class for all matan tasks"""
     pass
 
@@ -16,4 +16,3 @@ class MatanFormulaCaptchaTask(MatanCaptchaTask):
 
     def get(self):
         return str(self._formula)
-
